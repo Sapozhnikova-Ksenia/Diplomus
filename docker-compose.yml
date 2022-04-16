@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  node-app:
+    build: ./gate-simulator
+    image: node-app:1.0
+    container_name: gate-simulator
+    ports:
+      - '9999:9999'
+
+  mysql:
+    image: mysql
+    container_name: mysql
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./data_mysql:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=app
+      - MYSQL_USER=app
+      - MYSQL_PASSWORD=pass
