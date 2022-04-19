@@ -12,18 +12,25 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class CardForm {
     private SelenideElement numberCard = $(byText("Номер карты")).parent().$(".input__control");
+    private SelenideElement numberCardErrorMessage = $(byText("Номер карты")).parent().$(".input__sub");
     private SelenideElement monthCard = $(byText("Месяц")).parent().$(".input__control");
+    private SelenideElement monthCardErrorMessage = $(byText("Месяц")).parent().$(".input__sub");
     private SelenideElement yearCard = $(byText("Год")).parent().$(".input__control");
+    private SelenideElement yearCardErrorMessage = $(byText("Год")).parent().$(".input__sub");
     private SelenideElement nameAndSurnameCard = $(byText("Владелец")).parent().$(".input__control");
+    private SelenideElement nameAndSurnameCardErrorMessage = $(byText("Владелец")).parent().$(".input__sub");
     private SelenideElement cvvCode = $(byText("CVC/CVV")).parent().$(".input__control");
-    private SelenideElement codeCardError = cvvCode.parent().parent().$(byText("Неверный формат"));
+    private SelenideElement cvvCodeErrorMessage = $(byText("CVC/CVV")).parent().$(".input__sub");
     private SelenideElement continueButton = $$("button").find(exactText("Продолжить"));
     private SelenideElement notificationOK = $(".notification_status_ok");
     private final SelenideElement notificationError = $(".notification_status_error");
     private final SelenideElement notificationErrorCloseButton = $(".notification_status_error").$(".notification__closer");
     private final SelenideElement inputInvalid = $(".input__sub");
 
-    //private final SelenideElement cvvBadFormatError = cvv.parent().parent().$(byText("Неверный формат"));
+    public CardForm() {
+        SelenideElement heading = $$("h3").find(text("Оплата по карте"));
+        heading.shouldBe(visible);
+    }
 
     public void fillForm(Card card) {
         numberCard.setValue(card.getNumber());
@@ -47,7 +54,7 @@ public class CardForm {
     }
 
     //нажатие кнопки закрытия окна об ошибке
-    public void closeNotificationWindow (){
+    public void closeNotificationWindow() {
         notificationErrorCloseButton.click();
     }
 
@@ -60,4 +67,90 @@ public class CardForm {
     public String getInputInvalidMessage() {
         return inputInvalid.getText();
     }
+
+
+    ///////////////////// Поле Номер карты/////////////////////
+
+    // Видимость сообщения об ошибке под полем ввода номера карты
+    public void messageUnderCardNumberFieldIsVisible() {
+        numberCardErrorMessage.shouldBe(visible);
+    }
+
+    // Не видимость сообщения об ошибке под полем ввода номера карты
+    public void messageUnderCardNumberFieldIsHidden() {
+        numberCardErrorMessage.shouldBe(hidden);
+    }
+
+    // Получение текста сообщения об ошибке под полем ввода номера карты
+    public String getMessageUnderCardNumberField() {
+        return numberCardErrorMessage.getText();
+    }
+
+    ///////////////////// Поле Месяц /////////////////////
+
+    // Видимость сообщения об ошибке под полем ввода месяца карты
+    public void messageUnderMonthFieldIsVisible() {
+        monthCardErrorMessage.shouldBe(visible);
+    }
+
+    // Не видимость сообщения об ошибке под полем ввода месяца карты
+    public void messageUnderMonthFieldIsHidden() {
+        monthCardErrorMessage.shouldBe(hidden);
+    }
+
+    // Получение текста сообщения об ошибке под полем ввода месяца карты
+    public String getMessageUnderMonthField() {
+        return monthCardErrorMessage.getText();
+    }
+
+    ///////////////////// Поле Год /////////////////////
+
+    // Видимость сообщения об ошибке под полем ввода года карты
+    public void messageUnderYearFieldIsVisible() {
+        yearCardErrorMessage.shouldBe(visible);
+    }
+
+    // Не видимость сообщения об ошибке под полем ввода года карты
+    public void messageUnderYearFieldIsHidden() {
+        yearCardErrorMessage.shouldBe(hidden);
+    }
+
+    // Получение текста сообщения об ошибке под полем ввода года карты
+    public String getMessageUnderYearField() {
+        return yearCardErrorMessage.getText();
+    }
+    ///////////////////// Поле Владелец/////////////////////
+
+    // Видимость сообщения об ошибке под полем ввода Владелец
+    public void messageUnderHolderFieldIsVisible() {
+        nameAndSurnameCardErrorMessage.shouldBe(visible);
+    }
+
+    // Не видимость сообщения об ошибке под полем ввода Владелец
+    public void messageUnderHolderFieldIsHidden() {
+        nameAndSurnameCardErrorMessage.shouldBe(hidden);
+    }
+
+    // Получение текста сообщения об ошибке под полем ввода Владелец
+    public String getMessageUnderCardHolderField() {
+        return nameAndSurnameCardErrorMessage.getText();
+    }
+
+    ///////////////////// Поле CVV/////////////////////
+
+    // Видимость сообщения об ошибке под полем ввода CVV
+    public void messageUnderCVVFieldIsVisible() {
+        cvvCodeErrorMessage.shouldBe(visible);
+    }
+
+    // Не видимость сообщения об ошибке под полем ввода CVV
+    public void messageUnderCVVFieldIsHidden() {
+        cvvCodeErrorMessage.shouldBe(hidden);
+    }
+
+    // Получение текста сообщения об ошибке под полем ввода CVV
+    public String getMessageUnderCVVField() {
+        return cvvCodeErrorMessage.getText();
+    }
+
 }

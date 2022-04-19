@@ -178,7 +178,7 @@ public class DataGenerator {
         );
     }
 
-///////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////
     public static Card getCardWithEmptyNameAndSurname() {
         return new Card(approvedCardNumber,
                 "06",
@@ -187,6 +187,7 @@ public class DataGenerator {
                 "123"
         );
     }
+
     public static Card getCardWithOverLimitNumberOfLetters() {
         return new Card(approvedCardNumber,
                 "06",
@@ -195,6 +196,7 @@ public class DataGenerator {
                 "123"
         );
     }
+
     public static Card getCardWithUnderLimitNumberOfLetters() {
         return new Card(approvedCardNumber,
                 "06",
@@ -203,6 +205,7 @@ public class DataGenerator {
                 "123"
         );
     }
+
     public static Card getCardWithWrittenNameButDontWrittenSurnameBecauseDontUseSpace() {
         return new Card(approvedCardNumber,
                 "06",
@@ -211,6 +214,7 @@ public class DataGenerator {
                 "123"
         );
     }
+
     public static Card getCardWithWrittenKirillicSymbol() {
         return new Card(approvedCardNumber,
                 "06",
@@ -219,7 +223,8 @@ public class DataGenerator {
                 "123"
         );
     }
-    public static Card WrittenLatinicLetterButWithUseNumberAndSymbol() {
+
+    public static Card getWrittenLatinicLetterButWithUseNumberAndSymbol() {
         return new Card(approvedCardNumber,
                 "06",
                 "23",
@@ -238,6 +243,7 @@ public class DataGenerator {
                 ""
         );
     }
+
     public static Card getCardWithUnderLimitNumberOfCVV() {
         return new Card(approvedCardNumber,
                 "06",
@@ -246,6 +252,7 @@ public class DataGenerator {
                 "1"
         );
     }
+
     public static Card getCardWithWrittenFullZero() {
         return new Card(approvedCardNumber,
                 "06",
@@ -254,6 +261,7 @@ public class DataGenerator {
                 "000"
         );
     }
+
     public static Card getCardWrittenLatinicAndKirillicLetterWithUseSymbol() {
         return new Card(approvedCardNumber,
                 "06",
