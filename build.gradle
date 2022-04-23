@@ -10,6 +10,13 @@ version '1.0-SNAPSHOT'
 compileJava.options.encoding = "UTF-8"
 compileTestJava.options.encoding = "UTF-8"
 
+allure {
+    version = '2.16.1'
+    useJUnit5 {
+        version = '2.16.1'
+    }
+}
+
 repositories {
     mavenCentral()
 }
