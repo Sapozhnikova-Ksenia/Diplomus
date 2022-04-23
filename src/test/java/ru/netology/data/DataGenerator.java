@@ -1,34 +1,62 @@
 package ru.netology.data;
 
+import com.github.javafaker.Faker;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class DataGenerator {
 
     public static final String approvedCardNumber = ("4444 4444 4444 4441");
     public static final String declinedCardNumber = ("4444 4444 4444 4442");
 
+    private static final Faker faker = new Faker();
+
+    public static String generateUnknownCard() {
+        return faker.numerify("#### #### #### ####");
+    }
+
+    public static String generateMonth() {
+        return LocalDate.now().plusMonths(faker.number().numberBetween(0, 13)).format(DateTimeFormatter.ofPattern("MM"));
+    }
+
+    public static String generateYear() {
+        return LocalDate.now().plusYears(faker.number().numberBetween(1, 4)).format(DateTimeFormatter.ofPattern("yy"));
+    }
+
+    public static String generateHolder() {
+        return (faker.name().firstName() + " " + faker.name().lastName());
+    }
+
+
+    public static String generateCVC() {
+        return faker.numerify("###");
+    }
+
     public static Card getApprovedCard() {
         return new Card(approvedCardNumber,
-                "12",
-                "23",
-                "Kseniya Sapojok",
-                "123"
+                generateMonth(),
+                generateYear(),
+                generateHolder(),
+                generateCVC()
         );
     }
 
     public static Card getDeclinedCard() {
         return new Card(declinedCardNumber,
-                "12",
-                "23",
-                "Kseniya Sapojok",
-                "123"
+                generateMonth(),
+                generateYear(),
+                generateHolder(),
+                generateCVC()
         );
     }
 
     public static Card getUnknownCard() {
-        return new Card("1234567890123456",
-                "12",
-                "23",
-                "Kseniya Sapojok",
-                "123"
+        return new Card(generateUnknownCard(),
+                generateMonth(),
+                generateYear(),
+                generateHolder(),
+                generateCVC()
         );
     }
 
@@ -43,28 +71,28 @@ public class DataGenerator {
 
     public static Card getCardWithDontFullCardNumber() {
         return new Card("444444444444444",
-                "12",
-                "23",
-                "Kseniya Sapojok",
-                "123"
+                generateMonth(),
+                generateYear(),
+                generateHolder(),
+                generateCVC()
         );
     }
 
     public static Card getCardWithLatinAndKirillicAndSupersimbolCardNumber() {
         return new Card("aasdкняг+-*/4444",
-                "12",
-                "23",
-                "Kseniya Sapojok",
-                "123"
+                generateMonth(),
+                generateYear(),
+                generateHolder(),
+                generateCVC()
         );
     }
 
     public static Card getCardWithEmptyCardNumber() {
         return new Card("",
-                "12",
-                "23",
-                "Kseniya Sapojok",
-                "123"
+                generateMonth(),
+                generateYear(),
+                generateHolder(),
+                generateCVC()
         );
     }
 
@@ -72,164 +100,164 @@ public class DataGenerator {
     public static Card getCardWithEmptyMonth() {
         return new Card(approvedCardNumber,
                 "",
-                "23",
-                "Kseniya Sapojok",
-                "123"
+                generateYear(),
+                generateHolder(),
+                generateCVC()
         );
     }
 
     public static Card getCardWithDontFullMonth() {
         return new Card(approvedCardNumber,
                 "1",
-                "23",
-                "Kseniya Sapojok",
-                "123"
+                generateYear(),
+                generateHolder(),
+                generateCVC()
         );
     }
 
     public static Card getCardWithMoreLimitMonth() {
         return new Card(approvedCardNumber,
                 "13",
-                "23",
-                "Kseniya Sapojok",
-                "123"
+                generateYear(),
+                generateHolder(),
+                generateCVC()
         );
     }
 
     public static Card getCardWithDublZeroInMonth() {
         return new Card(approvedCardNumber,
                 "00",
-                "23",
-                "Kseniya Sapojok",
-                "123"
+                generateYear(),
+                generateHolder(),
+                generateCVC()
         );
     }
 
     public static Card getCardWithOldMonthButCurrentYear() {
         return new Card(approvedCardNumber,
                 "01",
-                "22",
-                "Kseniya Sapojok",
-                "123"
+                generateYear(),
+                generateHolder(),
+                generateCVC()
         );
     }
 
     public static Card getCardWithLatinAndKirillicAndSymbolInMonthField() {
         return new Card(approvedCardNumber,
                 "DfЖы+-",
-                "22",
-                "Kseniya Sapojok",
-                "123"
+                generateYear(),
+                generateHolder(),
+                generateCVC()
         );
     }
 ///////////////////////////////////////////////////////////
 
     public static Card getCardWithEmptyYear() {
         return new Card(approvedCardNumber,
-                "06",
+                generateMonth(),
                 "",
-                "Kseniya Sapojok",
-                "123"
+                generateHolder(),
+                generateCVC()
         );
     }
 
     public static Card getCardWithDontFullYear() {
         return new Card(approvedCardNumber,
-                "06",
+                generateMonth(),
                 "2",
-                "Kseniya Sapojok",
-                "123"
+                generateHolder(),
+                generateCVC()
         );
     }
 
     public static Card getCardWithMoreLimitYear() {
         return new Card(approvedCardNumber,
-                "06",
+                generateMonth(),
                 "26",
-                "Kseniya Sapojok",
-                "123"
+                generateHolder(),
+                generateCVC()
         );
     }
 
     public static Card getCardWithOldYear() {
         return new Card(approvedCardNumber,
-                "06",
+                generateMonth(),
                 "21",
-                "Kseniya Sapojok",
-                "123"
+                generateHolder(),
+                generateCVC()
         );
     }
 
     public static Card getCardWithDublZeroInYear() {
         return new Card(approvedCardNumber,
-                "06",
+                generateMonth(),
                 "00",
-                "Kseniya Sapojok",
-                "123"
+                generateHolder(),
+                generateCVC()
         );
     }
 
     public static Card getCardWithLatinAndKirillicAndSymbolInYearField() {
         return new Card(approvedCardNumber,
-                "06",
+                generateMonth(),
                 "DfЖы+-",
-                "Kseniya Sapojok",
-                "123"
+                generateHolder(),
+                generateCVC()
         );
     }
 
     ///////////////////////////////////////////////////////////
     public static Card getCardWithEmptyNameAndSurname() {
         return new Card(approvedCardNumber,
-                "06",
-                "22",
+                generateMonth(),
+                generateYear(),
                 "",
-                "123"
+                generateCVC()
         );
     }
 
     public static Card getCardWithOverLimitNumberOfLetters() {
         return new Card(approvedCardNumber,
-                "06",
-                "23",
+                generateMonth(),
+                generateYear(),
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaayf",
-                "123"
+                generateCVC()
         );
     }
 
     public static Card getCardWithUnderLimitNumberOfLetters() {
         return new Card(approvedCardNumber,
-                "06",
-                "23",
+                generateMonth(),
+                generateYear(),
                 "a",
-                "123"
+                generateCVC()
         );
     }
 
     public static Card getCardWithWrittenNameButDontWrittenSurnameBecauseDontUseSpace() {
         return new Card(approvedCardNumber,
-                "06",
-                "23",
+                generateMonth(),
+                generateYear(),
                 "KseniyaSapojok",
-                "123"
+                generateCVC()
         );
     }
 
     public static Card getCardWithWrittenKirillicSymbol() {
         return new Card(approvedCardNumber,
-                "06",
-                "23",
+                generateMonth(),
+                generateYear(),
                 "Ксенечка Сапожок",
-                "123"
+                generateCVC()
         );
     }
 
     public static Card getWrittenLatinicLetterButWithUseNumberAndSymbol() {
         return new Card(approvedCardNumber,
-                "06",
-                "23",
+                generateMonth(),
+                generateYear(),
                 "Ksen19+ ,,Sap0j0k",
-                "123"
+                generateCVC()
         );
     }
 
@@ -237,36 +265,36 @@ public class DataGenerator {
 
     public static Card getCardWithEmptyCVV() {
         return new Card(approvedCardNumber,
-                "12",
-                "23",
-                "Kseniya Sapojok",
+                generateMonth(),
+                generateYear(),
+                generateHolder(),
                 ""
         );
     }
 
     public static Card getCardWithUnderLimitNumberOfCVV() {
         return new Card(approvedCardNumber,
-                "06",
-                "23",
-                "Kseniya Sapojok",
+                generateMonth(),
+                generateYear(),
+                generateHolder(),
                 "1"
         );
     }
 
     public static Card getCardWithWrittenFullZero() {
         return new Card(approvedCardNumber,
-                "06",
-                "23",
-                "Kseniya Sapojok",
+                generateMonth(),
+                generateYear(),
+                generateHolder(),
                 "000"
         );
     }
 
     public static Card getCardWrittenLatinicAndKirillicLetterWithUseSymbol() {
         return new Card(approvedCardNumber,
-                "06",
-                "23",
-                "Kseniya Sapojok",
+                generateMonth(),
+                generateYear(),
+                generateHolder(),
                 "ЙQ+"
         );
     }

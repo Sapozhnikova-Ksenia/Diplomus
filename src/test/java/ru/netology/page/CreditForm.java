@@ -11,18 +11,18 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class CreditForm {
-    private SelenideElement numberCard = $(byText("Номер карты")).parent().$(".input__control");
-    private SelenideElement numberCardErrorMessage = $(byText("Номер карты")).parent().$(".input__sub");
-    private SelenideElement monthCard = $(byText("Месяц")).parent().$(".input__control");
-    private SelenideElement monthCardErrorMessage = $(byText("Месяц")).parent().$(".input__sub");
-    private SelenideElement yearCard = $(byText("Год")).parent().$(".input__control");
-    private SelenideElement yearCardErrorMessage = $(byText("Год")).parent().$(".input__sub");
-    private SelenideElement nameAndSurnameCard = $(byText("Владелец")).parent().$(".input__control");
-    private SelenideElement nameAndSurnameCardErrorMessage = $(byText("Владелец")).parent().$(".input__sub");
-    private SelenideElement cvvCode = $(byText("CVC/CVV")).parent().$(".input__control");
-    private SelenideElement cvvCodeErrorMessage = $(byText("CVC/CVV")).parent().$(".input__sub");
-    private SelenideElement continueButton = $$("button").find(exactText("Продолжить"));
-    private SelenideElement notificationOK = $(".notification_status_ok");
+    private final SelenideElement numberCard = $(byText("Номер карты")).parent().$(".input__control");
+    private final SelenideElement numberCardErrorMessage = $(byText("Номер карты")).parent().$(".input__sub");
+    private final SelenideElement monthCard = $(byText("Месяц")).parent().$(".input__control");
+    private final SelenideElement monthCardErrorMessage = $(byText("Месяц")).parent().$(".input__sub");
+    private final SelenideElement yearCard = $(byText("Год")).parent().$(".input__control");
+    private final SelenideElement yearCardErrorMessage = $(byText("Год")).parent().$(".input__sub");
+    private final SelenideElement nameAndSurnameCard = $(byText("Владелец")).parent().$(".input__control");
+    private final SelenideElement nameAndSurnameCardErrorMessage = $(byText("Владелец")).parent().$(".input__sub");
+    private final SelenideElement cvvCode = $(byText("CVC/CVV")).parent().$(".input__control");
+    private final SelenideElement cvvCodeErrorMessage = $(byText("CVC/CVV")).parent().$(".input__sub");
+    private final SelenideElement continueButton = $$("button").find(exactText("Продолжить"));
+    private final SelenideElement notificationOK = $(".notification_status_ok");
     private final SelenideElement notificationError = $(".notification_status_error");
     private final SelenideElement notificationErrorCloseButton = $(".notification_status_error").$(".notification__closer");
     private final SelenideElement inputInvalid = $(".input__sub");
@@ -152,6 +152,4 @@ public class CreditForm {
     public String getMessageUnderCVVField() {
         return cvvCodeErrorMessage.getText();
     }
-
 }
-
