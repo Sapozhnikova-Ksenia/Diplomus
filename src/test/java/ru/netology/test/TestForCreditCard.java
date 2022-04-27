@@ -37,17 +37,12 @@ public class TestForCreditCard {
     public void shouldBeOKWithApprovedCard() {
         // Отрываем начальную страницу
         var homePage = new HomePage();
-        // Переходим на страницу покупки по карте
+        // Переходим на страницу покупки в кредит
         var creditForm = homePage.buyWithCredit();
         // Заполняем поля таблицы валидными данными и жмём ПРОДОЛЖИТЬ
         creditForm.fillForm(DataGenerator.getApprovedCard());
         // Проверка появления всплывающего окна одобрения
         creditForm.notificationOkIsVisible();
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
         // Проверка статуса операции в БД
         assertEquals("APPROVED", DBHelper.getCreditStatus());
     }
@@ -60,11 +55,6 @@ public class TestForCreditCard {
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getDeclinedCard());
         creditForm.notificationErrorIsVisible();
-        creditForm.messageUnderCardNumberFieldIsVisible();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
         assertEquals("DECLINED", DBHelper.getCreditStatus());
     }
 
@@ -78,13 +68,6 @@ public class TestForCreditCard {
         creditForm.notificationErrorIsVisible();
         creditForm.closeNotificationWindow();
         creditForm.notificationOkIsHidden();
-        creditForm.messageUnderCardNumberFieldIsVisible();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
-        // Проверка НЕ появления записи в БД
-        assertNull(DBHelper.getCreditStatus());
     }
 
     //отправка пустой формы
@@ -94,17 +77,11 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getFullEmptyField());
-        creditForm.messageUnderCardNumberFieldIsVisible();
-        assertEquals("Поле обязательно для заполнения", creditForm.getMessageUnderCardNumberField());
-        creditForm.messageUnderMonthFieldIsVisible();
-        assertEquals("Поле обязательно для заполнения", creditForm.getMessageUnderMonthField());
-        creditForm.messageUnderYearFieldIsVisible();
-        assertEquals("Поле обязательно для заполнения", creditForm.getMessageUnderYearField());
-        creditForm.messageUnderHolderFieldIsVisible();
-        assertEquals("Поле обязательно для заполнения", creditForm.getMessageUnderCardHolderField());
-        creditForm.messageUnderCVVFieldIsVisible();
-        assertEquals("Поле обязательно для заполнения", creditForm.getMessageUnderCVVField());
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderCardNumberField("Поле обязательно для заполнения");
+        creditForm.messageUnderMonthField("Поле обязательно для заполнения");
+        creditForm.messageUnderYearField("Поле обязательно для заполнения");
+        creditForm.messageUnderHolderField("Поле обязательно для заполнения");
+        creditForm.messageUnderCVVField("Поле обязательно для заполнения");
     }
 
 ////////////////////Card
@@ -116,13 +93,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithEmptyCardNumber());
-        creditForm.messageUnderCardNumberFieldIsVisible();
-        assertEquals("Поле обязательно для заполнения", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderCardNumberField("Поле обязательно для заполнения");
     }
 
     //сообщение об ошибке при неполном заполнении поля ввода карты
@@ -132,29 +103,17 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithDontFullCardNumber());
-        creditForm.messageUnderCardNumberFieldIsVisible();
-        assertEquals("Неверный формат", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderCardNumberField("Неверный формат");
     }
 
     //сообщение об ошибке при заполнении поля ввода карты латиницей, кириллицей и символами
     @Test
-    @DisplayName("+ 7 Correct warning with uncorrect simbol in Card Number Field")
-    public void shouldShowWarningUnderCardNumberFieldWithUncorrectSimbolInCardNumberField() {
+    @DisplayName("+ 7 Correct warning with incorrect symbol in Card Number Field")
+    public void shouldShowWarningUnderCardNumberFieldWithIncorrectSymbolInCardNumberField() {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithLatinAndKirillicAndSupersimbolCardNumber());
-        creditForm.messageUnderCardNumberFieldIsVisible();
-        assertEquals("Неверный формат", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderCardNumberField("Неверный формат");
     }
 
 ////////////////////Month
@@ -166,13 +125,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithEmptyMonth());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsVisible();
-        assertEquals("Поле обязательно для заполнения", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderMonthField("Поле обязательно для заполнения");
     }
 
     //сообщение о неполном вводе месяца (1 цифра)
@@ -182,13 +135,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithDontFullMonth());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsVisible();
-        assertEquals("Неверный формат", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderMonthField("Неверный формат");
     }
 
     //введение значения в поле месяц выше допустимого (например 13)
@@ -198,46 +145,29 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithMoreLimitMonth());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsVisible();
-        assertEquals("Неверно указан срок действия карты", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderMonthField("Неверно указан срок действия карты");
     }
 
     //появление всплывающего окна об одобрении банком при вводе в поле месяц 00, ожидается ошибка БАГ
     @Test
-    @DisplayName("- 11 Correct warning with DublZero Month Field  BUG !!! ")
+    @DisplayName("- 11 Incorrect warning with DublZero Month Field  BUG !!! ")
     public void shouldShowWarningUnderMonthFieldWithDublZeroInMonthField() {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithDublZeroInMonth());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsVisible();
-        assertEquals("Неверно указан срок действия карты", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
+        creditForm.messageUnderMonthField("Неверно указан срок действия карты");
         creditForm.notificationOkIsHidden();
         assertNull(DBHelper.getCreditStatus());
     }
 
-    //введение устаревшего (минувшего) значения в поле месяц при  значении текущего года (например 01)
+    //введение устаревшего (минувшего) значения в поле месяц при значении текущего года (например 01)
     @Test
-    @DisplayName("- 12 Correct warning with Old Month But Current Year  ISSUES !!")
+    @DisplayName("- 12 Incorrect warning with Old Month But Current Year  ISSUES !!")
     public void shouldShowWarningUnderMonthFieldWithOldMonthButCurrentYear() {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithOldMonthButCurrentYear());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsVisible();
-        assertEquals("Истёк срок действия карты", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderMonthField("Истёк срок действия карты");
     }
 
     //При введении символа, букв латиницы, кириллицы - ввод в поле Месяца не осуществляется, при отправке
@@ -248,13 +178,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithLatinAndKirillicAndSymbolInMonthField());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsVisible();
-        assertEquals("Неверный формат", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderMonthField("Неверный формат");
     }
 
 ////////////////////Year
@@ -266,13 +190,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithEmptyYear());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsVisible();
-        assertEquals("Поле обязательно для заполнения", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderYearField("Поле обязательно для заполнения");
     }
 
     //сообщение о неполном вводе года (1 цифра)
@@ -282,13 +200,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithDontFullYear());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsVisible();
-        assertEquals("Неверный формат", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderYearField("Неверный формат");
     }
 
     //введение значения в поле года выше допустимого (например 26)
@@ -298,13 +210,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithMoreLimitYear());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsVisible();
-        assertEquals("Неверно указан срок действия карты", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderYearField("Неверно указан срок действия карты");
     }
 
     //введение устаревшего (минувшего) значения в поле года (например 21)
@@ -314,13 +220,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithOldYear());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsVisible();
-        assertEquals("Истёк срок действия карты", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderYearField("Истёк срок действия карты");
     }
 
     //введение нулевого значения в поле года (00)
@@ -330,14 +230,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithDublZeroInYear());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsVisible();
-        assertEquals("Неверно указан срок действия карты", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
-        creditForm.notificationOkIsHidden();
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderYearField("Неверно указан срок действия карты");
     }
 
     //При введении символа, букв латиницы, кириллицы - ввод в поле Год не осуществляется, при отправке
@@ -348,13 +241,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithLatinAndKirillicAndSymbolInYearField());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsVisible();
-        assertEquals("Неверный формат", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsHidden();
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderYearField("Неверный формат");
     }
 
 ////////////////////Name & Surname
@@ -366,13 +253,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithEmptyNameAndSurname());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsVisible();
-        assertEquals("Поле обязательно для заполнения", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderCVVFieldIsHidden();
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderHolderField("Поле обязательно для заполнения");
     }
 
     //введение количества букв в поле владельца карты выше допустимого (например 71)
@@ -382,12 +263,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithOverLimitNumberOfLetters());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsVisible();
-        assertEquals("Неверный формат", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderCVVFieldIsHidden();
+        creditForm.messageUnderHolderField("Неверный формат");
         creditForm.notificationOkIsHidden();
         assertNull(DBHelper.getCreditStatus());
     }
@@ -399,12 +275,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithUnderLimitNumberOfLetters());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsVisible();
-        assertEquals("Неверный формат", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderCVVFieldIsHidden();
+        creditForm.messageUnderHolderField("Неверный формат");
         creditForm.notificationOkIsHidden();
         assertNull(DBHelper.getCreditStatus());
     }
@@ -417,12 +288,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithWrittenNameButDontWrittenSurnameBecauseDontUseSpace());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsVisible();
-        assertEquals("Неверный формат", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderCVVFieldIsHidden();
+        creditForm.messageUnderHolderField("Неверный формат");
         creditForm.notificationOkIsHidden();
         assertNull(DBHelper.getCreditStatus());
     }
@@ -434,12 +300,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithWrittenKirillicSymbol());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsVisible();
-        assertEquals("Неверный формат", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderCVVFieldIsHidden();
+        creditForm.messageUnderHolderField("Неверный формат");
         creditForm.notificationOkIsHidden();
         assertNull(DBHelper.getCreditStatus());
     }
@@ -452,12 +313,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getWrittenLatinicLetterButWithUseNumberAndSymbol());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsVisible();
-        assertEquals("Неверный формат", creditForm.getInputInvalidMessage());
-        creditForm.messageUnderCVVFieldIsHidden();
+        creditForm.messageUnderHolderField("Неверный формат");
         creditForm.notificationOkIsHidden();
         assertNull(DBHelper.getCreditStatus());
     }
@@ -472,13 +328,8 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithEmptyCVV());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsHidden();
+        creditForm.messageUnderCVVField("Поле обязательно для заполнения");
         creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsVisible();
-        assertEquals("Поле обязательно для заполнения", creditForm.getMessageUnderCVVField());
-        assertNull(DBHelper.getCreditStatus());
     }
 
     //введение количества цифр в поле CVV ниже допустимого (например 1)
@@ -488,13 +339,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithUnderLimitNumberOfCVV());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsVisible();
-        assertEquals("Неверный формат", creditForm.getInputInvalidMessage());
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderCVVField("Неверный формат");
     }
 
     //введение нулевого значения в поле CVV (000)
@@ -504,12 +349,7 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWithWrittenFullZero());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsVisible();
-        assertEquals("Неверно указан CVC/CVV код", creditForm.getInputInvalidMessage());
+        creditForm.messageUnderCVVField("Неверно указан CVC/CVV код");
         creditForm.notificationOkIsHidden();
         assertNull(DBHelper.getCreditStatus());
     }
@@ -523,12 +363,6 @@ public class TestForCreditCard {
         var homePage = new HomePage();
         var creditForm = homePage.buyWithCredit();
         creditForm.fillForm(DataGenerator.getCardWrittenLatinicAndKirillicLetterWithUseSymbol());
-        creditForm.messageUnderCardNumberFieldIsHidden();
-        creditForm.messageUnderMonthFieldIsHidden();
-        creditForm.messageUnderYearFieldIsHidden();
-        creditForm.messageUnderHolderFieldIsHidden();
-        creditForm.messageUnderCVVFieldIsVisible();
-        assertEquals("Поле обязательно для заполнения", creditForm.getInputInvalidMessage());
-        assertNull(DBHelper.getCreditStatus());
+        creditForm.messageUnderCVVField("Поле обязательно для заполнения");
     }
 }

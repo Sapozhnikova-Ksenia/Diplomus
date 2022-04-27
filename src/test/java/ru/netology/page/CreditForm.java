@@ -9,6 +9,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreditForm {
     private final SelenideElement numberCard = $(byText("Номер карты")).parent().$(".input__control");
@@ -25,7 +26,6 @@ public class CreditForm {
     private final SelenideElement notificationOK = $(".notification_status_ok");
     private final SelenideElement notificationError = $(".notification_status_error");
     private final SelenideElement notificationErrorCloseButton = $(".notification_status_error").$(".notification__closer");
-    private final SelenideElement inputInvalid = $(".input__sub");
 
     public CreditForm() {
         SelenideElement heading = $$("h3").find(text("Кредит по данным карты"));
@@ -63,67 +63,38 @@ public class CreditForm {
         notificationOK.shouldBe(hidden);
     }
 
-    // Получение текста сообщения об ошибке под полем ввода
-    public String getInputInvalidMessage() {
-        return inputInvalid.getText();
-    }
-
 
     ///////////////////// Поле Номер карты/////////////////////
 
-    // Видимость сообщения об ошибке под полем ввода номера карты
-    public void messageUnderCardNumberFieldIsVisible() {
+    // Видимость сообщения и текста ошибки под полем ввода номера карты
+    public void messageUnderCardNumberField(String message) {
         numberCardErrorMessage.shouldBe(visible);
+        assertEquals(message, numberCardErrorMessage.getText());
     }
 
-    // Не видимость сообщения об ошибке под полем ввода номера карты
-    public void messageUnderCardNumberFieldIsHidden() {
-        numberCardErrorMessage.shouldBe(hidden);
-    }
-
-    // Получение текста сообщения об ошибке под полем ввода номера карты
-    public String getMessageUnderCardNumberField() {
-        return numberCardErrorMessage.getText();
-    }
 
     ///////////////////// Поле Месяц /////////////////////
 
-    // Видимость сообщения об ошибке под полем ввода месяца карты
-    public void messageUnderMonthFieldIsVisible() {
+    // Видимость сообщения и текста ошибки под полем ввода месяца карты
+    public void messageUnderMonthField(String message) {
         monthCardErrorMessage.shouldBe(visible);
-    }
-
-    // Не видимость сообщения об ошибке под полем ввода месяца карты
-    public void messageUnderMonthFieldIsHidden() {
-        monthCardErrorMessage.shouldBe(hidden);
-    }
-
-    // Получение текста сообщения об ошибке под полем ввода месяца карты
-    public String getMessageUnderMonthField() {
-        return monthCardErrorMessage.getText();
+        assertEquals(message, monthCardErrorMessage.getText());
     }
 
     ///////////////////// Поле Год /////////////////////
 
-    // Видимость сообщения об ошибке под полем ввода года карты
-    public void messageUnderYearFieldIsVisible() {
+    // Видимость сообщения и текста ошибки под полем ввода года карты
+    public void messageUnderYearField(String message) {
         yearCardErrorMessage.shouldBe(visible);
+        assertEquals(message, yearCardErrorMessage.getText());
     }
 
-    // Не видимость сообщения об ошибке под полем ввода года карты
-    public void messageUnderYearFieldIsHidden() {
-        yearCardErrorMessage.shouldBe(hidden);
-    }
+    ///////////////////// Поле Владелец /////////////////////
 
-    // Получение текста сообщения об ошибке под полем ввода года карты
-    public String getMessageUnderYearField() {
-        return yearCardErrorMessage.getText();
-    }
-    ///////////////////// Поле Владелец/////////////////////
-
-    // Видимость сообщения об ошибке под полем ввода Владелец
-    public void messageUnderHolderFieldIsVisible() {
+    // Видимость сообщения и текста ошибки под полем ввода Владелец
+    public void messageUnderHolderField(String message) {
         nameAndSurnameCardErrorMessage.shouldBe(visible);
+        assertEquals(message, nameAndSurnameCardErrorMessage.getText());
     }
 
     // Не видимость сообщения об ошибке под полем ввода Владелец
@@ -131,25 +102,12 @@ public class CreditForm {
         nameAndSurnameCardErrorMessage.shouldBe(hidden);
     }
 
-    // Получение текста сообщения об ошибке под полем ввода Владелец
-    public String getMessageUnderCardHolderField() {
-        return nameAndSurnameCardErrorMessage.getText();
-    }
-
     ///////////////////// Поле CVV/////////////////////
 
-    // Видимость сообщения об ошибке под полем ввода CVV
-    public void messageUnderCVVFieldIsVisible() {
+    // Видимость сообщения и текста ошибки под полем ввода CVV
+    public void messageUnderCVVField(String message) {
         cvvCodeErrorMessage.shouldBe(visible);
+        assertEquals(message, cvvCodeErrorMessage.getText());
     }
 
-    // Не видимость сообщения об ошибке под полем ввода CVV
-    public void messageUnderCVVFieldIsHidden() {
-        cvvCodeErrorMessage.shouldBe(hidden);
-    }
-
-    // Получение текста сообщения об ошибке под полем ввода CVV
-    public String getMessageUnderCVVField() {
-        return cvvCodeErrorMessage.getText();
-    }
 }
