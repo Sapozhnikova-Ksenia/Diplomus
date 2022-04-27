@@ -20,6 +20,14 @@ public class DataGenerator {
         return LocalDate.now().plusMonths(faker.number().numberBetween(0, 13)).format(DateTimeFormatter.ofPattern("MM"));
     }
 
+    public static String generatePastMonth() {
+        return LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("MM"));
+    }
+
+    public static String generateCurrentYear() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("yy"));
+    }
+
     public static String generateYear() {
         return LocalDate.now().plusYears(faker.number().numberBetween(1, 4)).format(DateTimeFormatter.ofPattern("yy"));
     }
@@ -135,8 +143,8 @@ public class DataGenerator {
 
     public static Card getCardWithOldMonthButCurrentYear() {
         return new Card(approvedCardNumber,
-                "01",
-                generateYear(),
+                generatePastMonth(),
+                generateCurrentYear(),
                 generateHolder(),
                 generateCVC()
         );
