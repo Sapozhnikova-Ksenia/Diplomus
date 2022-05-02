@@ -68,8 +68,7 @@ public class CreditForm {
 
     // Видимость сообщения и текста ошибки под полем ввода номера карты
     public void messageUnderCardNumberField(String message) {
-        numberCardErrorMessage.shouldBe(visible);
-        assertEquals(message, numberCardErrorMessage.getText());
+        numberCardErrorMessage.shouldHave(text(message)).shouldBe(visible);
     }
 
 
@@ -77,24 +76,21 @@ public class CreditForm {
 
     // Видимость сообщения и текста ошибки под полем ввода месяца карты
     public void messageUnderMonthField(String message) {
-        monthCardErrorMessage.shouldBe(visible);
-        assertEquals(message, monthCardErrorMessage.getText());
+        monthCardErrorMessage.shouldHave(text(message)).shouldBe(visible);
     }
 
     ///////////////////// Поле Год /////////////////////
 
     // Видимость сообщения и текста ошибки под полем ввода года карты
     public void messageUnderYearField(String message) {
-        yearCardErrorMessage.shouldBe(visible);
-        assertEquals(message, yearCardErrorMessage.getText());
+        yearCardErrorMessage.shouldHave(text(message)).shouldBe(visible);
     }
 
     ///////////////////// Поле Владелец /////////////////////
 
     // Видимость сообщения и текста ошибки под полем ввода Владелец
     public void messageUnderHolderField(String message) {
-        nameAndSurnameCardErrorMessage.shouldBe(visible);
-        assertEquals(message, nameAndSurnameCardErrorMessage.getText());
+        nameAndSurnameCardErrorMessage.shouldHave(text(message)).shouldBe(visible);
     }
 
     // Не видимость сообщения об ошибке под полем ввода Владелец
@@ -106,8 +102,7 @@ public class CreditForm {
 
     // Видимость сообщения и текста ошибки под полем ввода CVV
     public void messageUnderCVVField(String message) {
-        cvvCodeErrorMessage.shouldBe(visible);
-        assertEquals(message, cvvCodeErrorMessage.getText());
+        cvvCodeErrorMessage.shouldHave(text(message)).shouldBe(visible);
     }
 
 }
