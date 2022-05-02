@@ -1,5 +1,10 @@
 # Дипломный проект по профессии «Тестировщик»
 
+## Документация
+- [План автоматизации тестирования](https://github.com/Sapozhnikova-Ksenia/Diplomus/blob/master/docs/plan.md);
+- [Отчёт по итогам тестирования](https://github.com/Sapozhnikova-Ksenia/Diplomus/blob/master/docs/Report.md);
+- [Отчёт по итогам автоматизации тестирования](https://github.com/Sapozhnikova-Ksenia/Diplomus/blob/master/docs/Summary.md).
+
 ## Инструкция по запуску
 1. Клонировать удаленный репозиторий в `Git Bash` с помощью команды `git clone https://github.com/Sapozhnikova-Ksenia/Diplomus`
 
